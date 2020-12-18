@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "heartnsoul-asks"
+  },
+  "targets": {
+    "heartnsoul-asks": {
+      "hosting": {
+        "dev": [
+          "heartnsoul-asks-dev"
+        ],
+        "prod": [
+          "heartnsoul-asks"
+        ]
+      }
+    }
+  }
+}

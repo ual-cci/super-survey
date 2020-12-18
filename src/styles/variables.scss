@@ -1,0 +1,67 @@
+@charset "utf-8";
+
+$fire-engine-red: rgba(227, 5, 24, 1);
+$arcade-green: rgba(11, 193, 182, 1);
+$hot-pink: rgba(255, 20, 148, 1);
+$warehouse-blue: rgba(4, 110, 182, 1);
+$soft-pink: rgba(225, 207, 207, 1);
+$factory-yellow: rgba(255, 229, 0, 1);
+
+
+$alpha-lighten: 0.2;
+
+.green-background {
+  background: $arcade-green;
+}
+
+.green-element {
+  background: rgba($arcade-green, $alpha-lighten) !important;
+  color: #222;
+  &.active {
+    font-weight: bold;
+  }
+}
+
+.blue-element {
+  background: rgba($warehouse-blue, $alpha-lighten) !important;
+  color: #222;
+  &.active {
+    font-weight: bold;
+  }
+}
+
+.red-element {
+  background: rgba($fire-engine-red, $alpha-lighten) !important;
+  color: #222;
+  &.active {
+    font-weight: bold;
+  }
+}
+
+.yellow-element {
+  background: rgba($factory-yellow, $alpha-lighten) !important;
+  color: #222;
+  &.active {
+    font-weight: bold;
+  }
+}
+
+.pink-element {
+  background: rgba($hot-pink, $alpha-lighten) !important;
+  color: #222;
+  &.active {
+    font-weight: bold;
+  }
+}
+
+.editor-content, .survey {
+  h1 {
+    font-size: 160%;
+  }
+  h2 {
+    font-size: 140%;
+  }
+  h3 {
+    font-size: 120%;
+  }
+}

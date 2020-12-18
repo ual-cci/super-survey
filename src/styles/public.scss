@@ -1,0 +1,53 @@
+@charset "utf-8";
+
+@font-face {
+  font-family: "VagRounded";
+  src: url("/fonts/VagRounded.woff");
+}
+
+$family-sans-serif: "VagRounded", sans-serif;
+$body-size: 16pt;
+$max-width: 1200px;
+
+$fire-engine-red: rgba(227, 5, 24, 1);
+$arcade-green: rgba(11, 193, 182, 1);
+$hot-pink: rgba(255, 20, 148, 1);
+$warehouse-blue: rgba(4, 110, 182, 1);
+$soft-pink: rgba(225, 207, 207, 1);
+$factory-yellow: rgba(255, 229, 0, 1);
+
+$primary: $hot-pink;
+$info: $arcade-green;
+$link: $warehouse-blue;
+$warning: $factory-yellow;
+$danger: $fire-engine-red;
+// $secondary: #7af;
+// $success: #e29;
+// $link: $pink;
+// $widescreen-enabled: false;
+// $fullhd-enabled: false;
+
+// Update some of Bulma's component variables
+// $body-background-color: $beige-lighter;
+// $control-border-width: 2px;
+// $input-border-color: transparent;
+// $input-shadow: none;
+
+@import "~bulma/sass/utilities/_all.sass";
+@import "~bulma/sass/base/_all.sass";
+@import "~bulma/sass/elements/_all.sass";
+@import "~bulma/sass/grid/_all.sass";
+@import "~bulma/sass/components/_all.sass";
+@import "~bulma/sass/layout/_all.sass";
+@import "~bulma/sass/form/_all.sass";
+
+html {
+  background: #fff;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
