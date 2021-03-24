@@ -1,15 +1,14 @@
 {
   "projects": {
-    "default": "heartnsoul-asks"
+    "default": "test-thing"
   },
   "targets": {
-    "heartnsoul-asks": {
+    "test-thing": {
       "hosting": {
         "dev": [
-          "heartnsoul-asks-dev"
+          "test-thing-dev"
         ],
         "prod": [
-          "heartnsoul-asks"
         ]
       }
     }

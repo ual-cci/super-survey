@@ -2,6 +2,7 @@
 <div id="app"  :class="globalElementClass">
   <div class="container">
     <router-view/>
+    <p>Boners</p>
   </div>
 </div>
 </template>

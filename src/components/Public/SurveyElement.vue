@@ -33,7 +33,7 @@ export default {
       this.grabKeys(this.element, ['number'], element);
     }
 
-    const videos = this.$refs.element.querySelectorAll('video');
+    /* const videos = this.$refs.element.querySelectorAll('video');
     videos.forEach((v) => {
       v.onplay = () => {
         const srcRe = v.src.match(/heartnsoul-asks.appspot.com\/o\/(.*.mp4)/);
@@ -48,7 +48,7 @@ export default {
           this.$db.collection('video-plays').add(payload);
         }
       };
-    });
+    }); */
   },
 };
 </script>

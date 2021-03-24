@@ -48,9 +48,11 @@ export default {
       Vue.set(this.fetching, thing, true);
       this.$auth.currentUser.getIdToken(true)
         .then((token) => {
-          let baseURL = 'https://europe-west1-heartnsoul-asks.cloudfunctions.net/app';
+          // TODO: get this working
+
+          let baseURL = '[this is not set]';
           if (!this.production) {
-            baseURL = 'http://localhost:5000/heartnsoul-asks/us-central1/app';
+            baseURL = 'http://localhost:8080/survey-asks/us-central1/app';
           }
           const url = `${baseURL}/survey/${thing}/${this.surveyID}?numbers=${this.numberAnswers}&columns=${this.answerColumns}`;
 

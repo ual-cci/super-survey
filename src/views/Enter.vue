@@ -6,14 +6,8 @@
   </div>
   <div class="enter">
     <div v-if="stage === 'home'" class="been">
-      <video controls controlslist="nodownload"
-             src="https://firebasestorage.googleapis.com/v0/b/heartnsoul-asks.appspot.com/o/video%2Flogin-home.mp4?alt=media&token=5e93e3c8-5598-495f-bf75-8ed43121caaf">
-      </video>
       <p>
-        Hello! Welcome to Heart n Soul Asks,
-        a place where people with learning disabilities and
-        autistic people ask the questions.
-        Have you answered any of our questions before?
+        Hello and welcome to Super Survey!
       </p>
       <div class="buttons">
         <span class="button  is-medium is-link"
@@ -38,9 +32,6 @@
       </template>
 
       <template v-else-if="stage === 'signup'">
-        <video controls controlslist="nodownload"
-               src="https://firebasestorage.googleapis.com/v0/b/heartnsoul-asks.appspot.com/o/video%2Flogin-signup.mp4?alt=media&token=59547c71-b896-4069-afc9-a6b9432fad95">
-        </video>
         <h2>
           To begin with, we will need your email address or phone number.
           This will be your ID, so that we can tell you apart from other

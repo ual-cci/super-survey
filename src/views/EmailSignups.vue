@@ -26,9 +26,9 @@ export default {
       this.fetching = path;
       this.$auth.currentUser.getIdToken(true)
         .then((token) => {
-          let baseURL = 'https://europe-west1-heartnsoul-asks.cloudfunctions.net/app';
+          let baseURL = '[dev: this has not been set]';
           if (!this.production) {
-            baseURL = 'http://localhost:5000/heartnsoul-asks/us-central1/app';
+            baseURL = '[prod: this has not been set]';
           }
           const url = `${baseURL}/${path}`;
 
