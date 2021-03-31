@@ -1,9 +1,9 @@
 {
   "projects": {
-    "default": "test-thing"
+    "default": "test-thing-307817"
   },
   "targets": {
-    "test-thing": {
+    "test-thing-307817": {
       "hosting": {
         "dev": [
           "test-thing-dev"
