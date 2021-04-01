@@ -3,7 +3,6 @@ import Router from 'vue-router';
 import firebase from '@firebase/app';
 import '@firebase/firestore';
 import '@firebase/auth';
-import { randomThing } from '@/thing-generator';
 import store from './store';
 
 Vue.use(Router);
@@ -34,45 +33,7 @@ const guards = {
       });
     }
   },
-  autoSignin(to, from, next) {
-    if (!store.state.user.id) {
-      const id = `#${(Math.random() * 1e18).toString(16)}`;
-      const payload = {
-        signedUp: new Date(),
-        anonID: randomThing(),
-        idType: 'anonymous',
-      };
 
-      firebase.firestore().collection('users')
-        .doc(id)
-        .set(payload);
-
-      store.commit('setUser', { id, ...payload });
-    }
-    next();
-  },
-  assignID(to, from, next) {
-    const uid = to.query.u;
-    if (uid) {
-      const id = `!${uid}`;
-      const payload = {
-        signedUp: new Date(),
-        anonID: randomThing(),
-        idType: 'auto',
-      };
-
-      const docRef = firebase.firestore().collection('users').doc(id);
-      docRef.get()
-        .then((d) => {
-          if (!d.exists) {
-            docRef.set(payload, { merge: true });
-          }
-        });
-
-      store.commit('setUser', { id, ...payload });
-    }
-    next();
-  },
   surveyRedirect(to, from, next) {
     firebase.firestore().collection('misc').doc('slugs')
       .get()
@@ -149,22 +110,6 @@ export default new Router({
       component: () => import('./views/Survey.vue'),
       props: true,
       beforeEnter: guards.needsSignedInUser,
-      meta: { publicFacing: true },
-    },
-    {
-      path: '/a/survey/:surveyID',
-      name: 'anonymous-survey',
-      component: () => import('./views/Survey.vue'),
-      props: true,
-      beforeEnter: guards.autoSignin,
-      meta: { publicFacing: true },
-    },
-    {
-      path: '/u/survey/:surveyID',
-      name: 'assign-id-survey',
-      component: () => import('./views/Survey.vue'),
-      props: true,
-      beforeEnter: guards.assignID,
       meta: { publicFacing: true },
     },
     {
