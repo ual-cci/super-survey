@@ -184,6 +184,12 @@ export default new Router({
       beforeEnter: guards.onlyAdmin,
       component: () => import('./views/EmailSignups.vue'),
     },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'route-not-found',
+      component: () => import('./views/RouteNotFound.vue')
+    }
+
     // // redirect root to a survey
     // {
     //   path: '/',
