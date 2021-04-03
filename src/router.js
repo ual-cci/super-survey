@@ -130,21 +130,17 @@ export default new Router({
       component: () => import('./views/EmailSignups.vue'),
     },
     {
+      path: '/',
+      name: 'root',
+      component: () => import('./views/Root.vue'),
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'route-not-found',
       component: () => import('./views/RouteNotFound.vue')
     }
 
-    // // redirect root to a survey
-    // {
-    //   path: '/',
-    //   redirect: {
-    //     name: 'enter',
-    //     params: {
-    //       surveyID: 'mISqCDIsOA8N5HDjpmoH',
-    //     },
-    //   },
-    // },
+
   ],
   scrollBehavior() {
     return { x: 0, y: 0 };
