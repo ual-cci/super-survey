@@ -58,7 +58,7 @@
     </p>
   </div>
 </admin-narrow>
- </template>
+</template>
 
 <script>
 import AdminNarrow from '@/components/Display/AdminNarrow.vue';
