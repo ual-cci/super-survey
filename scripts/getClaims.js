@@ -8,7 +8,7 @@ if (process.argv.length < 3) {
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://test-thing-307817.firebaseio.com',
+  databaseURL: 'https://super-survey-307711.firebaseio.com',
 });
 
 const uid = process.argv[2];

@@ -1,47 +1,45 @@
 <template>
-<admin-narrow>
-<admin-header></admin-header>
-  <div id="projects">
-    <div class="projects">
-      <div class="intro">
-        <h1 class="title">Hello, {{ user.displayName }}</h1>
-        <div class="add">
-          <input v-if="addProjectInputVisible"
-                 v-model="newProjectName"
-                 class="input" type="text" ref="newProjectInput"
-                 v-on:keydown.enter="addProject"/>
-          <a class="button is-primary"
-                  :disabled="addProjectInputVisible && newProjectName === ''"
-                  @click="addProject">
-            <i class="fas fa-plus-circle"></i>
-            Add New Project
-          </a>
+<div class='is-fullheight'>
+  <admin-header></admin-header>
+
+  <section class="main-content columns is-fullheight">
+    <admin-side-menu :projects="projectList"></admin-side-menu>
+
+    <div id="projects" class="container column is-10">
+      <div class="projects">
+        <div class="intro">
+          <div class="add">
+            <input v-if="addProjectInputVisible"
+                  v-model="newProjectName"
+                  class="input" type="text" ref="newProjectInput"
+                  v-on:keydown.enter="addProject"/>
+            <a class="button is-primary"
+                    :disabled="addProjectInputVisible && newProjectName === ''"
+                    @click="addProject">
+              <i class="fas fa-plus-circle"></i>
+              Add New Project
+            </a>
+          </div>
         </div>
-        <h2 v-if="projects" class="subtitle is-4">
-          <span v-if="projectList.length > 0">
-            Your projects:
-          </span>
-          <span v-else>Add some projects!</span>
-        </h2>
+
+        <transition name="fade">
+          <div v-if="projects" class="project-list">
+            <project v-for="project in projectList" :key="project.id"
+                    :project="project"
+                    :user="user">
+            </project>
+          </div>
+        </transition>
       </div>
 
-      <transition name="fade">
-        <div v-if="projects" class="project-list">
-          <project v-for="project in projectList" :key="project.id"
-                   :project="project"
-                   :user="user">
-          </project>
-        </div>
-      </transition>
+      <prompt :show="!user.displayName"
+              :intro="'Looks like this is the first time you\'ve signed in.'"
+              :text="'What\'s your name?'"
+              @set="setUserName">
+      </prompt>
     </div>
-
-    <prompt :show="!user.displayName"
-            :intro="'Looks like this is the first time you\'ve signed in.'"
-            :text="'What\'s your name?'"
-            @set="setUserName">
-    </prompt>
-  </div>
-</admin-narrow>
+  </section>
+</div>
 </template>
 
 <script>
@@ -51,12 +49,14 @@ import AdminNarrow from '@/components/Display/AdminNarrow.vue';
 import AdminHeader from '@/components/Display/AdminHeader.vue';
 import Project from '@/components/ProjectsDashboard/Project.vue';
 import Prompt from '@/components/Prompt.vue';
+import AdminSideMenu from '@/components/AdminSideMenu.vue';
 
 export default {
   name: 'projects',
   components: {
     AdminNarrow,
     AdminHeader,
+    AdminSideMenu,
     Project,
     Prompt,
   },
@@ -148,6 +148,14 @@ export default {
 
 <style lang="scss">
 @import "@/styles/admin.scss";
+
+.container {
+
+}
+
+aside.menu {
+  background-color: #eee;
+}
 
 #projects .projects {
 

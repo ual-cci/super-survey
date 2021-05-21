@@ -74,6 +74,14 @@ export default new Router({
       meta: { hasHeader: true },
     },
     {
+      path: '/projects/:projectID',
+      name: 'project-details',
+      props: true,
+      component: () => import('./views/ProjectDetails.vue'),
+      beforeEnter: guards.onlyAdmin,
+      meta: { hasHeader: true },
+    },
+    {
       path: '/survey/stats/:surveyID',
       name: 'survey-stats',
       component: () => import('./views/SurveyStats.vue'),
@@ -137,10 +145,8 @@ export default new Router({
     {
       path: '/:pathMatch(.*)*',
       name: 'route-not-found',
-      component: () => import('./views/RouteNotFound.vue')
-    }
-
-
+      component: () => import('./views/RouteNotFound.vue'),
+    },
   ],
   scrollBehavior() {
     return { x: 0, y: 0 };

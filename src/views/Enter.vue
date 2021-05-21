@@ -9,15 +9,18 @@
       <p>
         Hello and welcome to Super Survey!
       </p>
+      <p>
+        Do you have a Super Survey Account?
+      </p>
       <div class="buttons">
         <span class="button  is-medium is-link"
               @click="$router.push({ name: 'enter', params: {
                 stage: 'signup', surveyID: surveyID,
-              }})">No</span>
+              }})">No (sign up)</span>
         <span class="button is-medium is-info"
               @click="$router.push({ name: 'enter', params: {
                 stage: 'login', surveyID: surveyID,
-              }})">Yes</span>
+              }})">Yes (log in)</span>
       </div>
     </div>
     <div v-else-if="stage === 'login' || stage === 'signup'" class="been">

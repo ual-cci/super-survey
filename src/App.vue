@@ -1,8 +1,6 @@
 <template>
 <div id="app"  :class="globalElementClass">
-  <div class="container">
-    <router-view/>
-  </div>
+  <router-view/>
 </div>
 </template>
 
@@ -25,12 +23,8 @@ body {
 
 #app {
   .container {
-    position: relative;
-    margin: 0px auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    max-width: 1122px;
-    width: unset !important;
   }
 }
 
