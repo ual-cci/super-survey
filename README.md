@@ -10,9 +10,7 @@ DOI:https://doi.org/10.1145/3313831.3376278
 
 Super Survey has the following features:
 
-Fully responsive surveys with accessible features, including the collection of responses by text, audio, video and image including on all mobile devices
-
-Support for the following question types:
+- Fully responsive surveys and surveuy creation with accessible features, including the collection of responses by text, audio, video and image including on all mobile devices
 - Free Text, image, audio or video response
 - Multiple Choice responses
 - Likert, including accessible likert forms with instant generation of response types
