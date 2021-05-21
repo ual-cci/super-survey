@@ -1,6 +1,6 @@
 # SuperSurvey
 
-SuperSurvey is a survey authoring and deployment platform written in Vue.js backed by Firebase. It has been designed to be accessible, easy to deploy, and fully featured enough to meet the high standards required by social science, humanities, design and HCI researchers. It was originally developed by the UAL Creative Comupting Institute as a research tool through a co-design/co-research process with the community arts organisation, heart n soul (https://heartnsoul.com). You can take the heart n soul surveys here:
+SuperSurvey is a survey authoring and deployment platform written in Vue.js backed by Firebase. It has been designed to be accessible, easy to deploy, and fully featured enough to meet the high standards required by social science, humanities, design and HCI researchers. It was originally developed by the UAL Creative Computing Institute as a research tool through a co-design/co-research process with the community arts organisation, heart n soul (https://heartnsoul.com). You can take the heart n soul surveys here:
 
 https://heartnsoulasks.com/enter/mISqCDIsOA8N5HDjpmoH
 
