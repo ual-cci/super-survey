@@ -27,7 +27,7 @@
           Please enter the email address or phone number that you used before:
         </h2>
         <h2 v-else>
-          Please enter the email address or phone number that you used before:
+          Please enter an email address or phone number
         </h2>
       </template>
 
