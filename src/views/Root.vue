@@ -14,7 +14,7 @@
         <p>System has {{surveyCount}} surveys</p>
         <ul id='survey-list'>
           <li v-for="survey in surveys" :key="survey.id">
-            <a @click="$router.push({name: 'survey', surveyID: survey.id})">{{survey.title}}</a>
+            <a @click="gotoSurvey(survey.id)">{{survey.title}}</a>
           </li>
         </ul>
       </div>
@@ -28,27 +28,29 @@ export default {
     return {
       loaded: false,
       surveys: [],
-      surveyCount: 0
+      surveyCount: 0,
     };
   },
-
+  methods: {
+    gotoSurvey(id) {
+      this.$router.push({ name: 'survey', params: { surveyID: id } });
+    },
+  },
   created() {
     this.$db.collection('surveys')
       .orderBy('title')
       .get()
       .then((snapshot) => {
-        let surveyData = snapshot.docs.map( doc => {
-          return {
-            id: doc.id,
-            title: doc.data().title
-          };
-        });
-        
+        const surveyData = snapshot.docs.map(doc => ({
+          id: doc.id,
+          title: doc.data().title,
+        }));
+
         this.loaded = true;
-        this.surveys = surveyData,
+        this.surveys = surveyData;
         this.surveyCount = surveyData.length;
-    });
-  }
+      });
+  },
 };
 </script>
 
@@ -66,8 +68,9 @@ main#root {
   }
 
   h1 {
-    font-size: 2em;  
+    font-size: 2em;
   }
+
   h2 {
     font-size: 1.5em;
   }

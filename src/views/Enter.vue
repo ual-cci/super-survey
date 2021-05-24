@@ -1,95 +1,65 @@
 <template>
 <public-container>
   <img src="/img/logo.png">
-  <div v-if="stage !== 'home'" class="home" @click="home">
-    <i class="fas fa-home"></i>
-  </div>
   <div class="enter">
-    <div v-if="stage === 'home'" class="been">
-      <p>
-        Hello and welcome to Super Survey!
-      </p>
-      <p>
-        Do you have a Super Survey Account?
-      </p>
-      <div class="buttons">
-        <span class="button  is-medium is-link"
-              @click="$router.push({ name: 'enter', params: {
-                stage: 'signup', surveyID: surveyID,
-              }})">No (sign up)</span>
-        <span class="button is-medium is-info"
-              @click="$router.push({ name: 'enter', params: {
-                stage: 'login', surveyID: surveyID,
-              }})">Yes (log in)</span>
-      </div>
-    </div>
-    <div v-else-if="stage === 'login' || stage === 'signup'" class="been">
-      <template v-if="stage === 'login'">
-        <h2 v-if="loginError">
-          Sorry! We don’t know that email or phone number. Can you please try again?
-          Please enter the email address or phone number that you used before:
-        </h2>
-        <h2 v-else>
-          Please enter the email address or phone number that you used before:
-        </h2>
-      </template>
+    <h1>Super Survey</h1>
 
-      <template v-else-if="stage === 'signup'">
-        <h2>
-          To begin with, we will need your email address or phone number.
-          This will be your ID, so that we can tell you apart from other
-          people and track your answers over time if you answer more of our
-          questions. We won’t use your email address for anything else
-          without your consent.
-        </h2>
-      </template>
-      <div class="control has-icons-left has-icons-right">
-        <input class="input" type="email"
-               placeholder="Email address"
-               :disabled="valid.phone"
-               @keydown.enter="okAction"
-               v-model="email">
-        <span class="icon is-left">
-          <i class="fas fa-envelope"></i>
-        </span>
-        <span v-if="stage === 'signup' && valid.email" class="icon is-right tick">
-          <i class="fas fa-check"></i>
-        </span>
-      </div>
-      <div class="control has-icons-left has-icons-right">
-        <input class="input" type="tel"
-               placeholder="Phone number"
-               :disabled="valid.email"
-               @keydown.enter="okAction"
-               v-model="phone">
-        <span class="icon is-left">
-          <i class="fas fa-phone"></i>
-        </span>
-        <span v-if="stage === 'signup' && valid.phone" class="icon is-right tick">
-          <i class="fas fa-check"></i>
-        </span>
-      </div>
-      <span class="button subtitle is-4 is-link"
-            :disabled="stage === 'signup' && !eitherValid"
-            @click="okAction">OK</span>
-      <div v-if="stage === 'signup'" class="why">
-        <p v-if="showWhy">
-          We need your email or phone number so that we can:
-          <ul>
-            <li>Tell you apart from other people</li>
-            <li>Track your answers over time</li>
-          </ul>
-        </p>
-        <a v-else @click="showWhy = true">Why do we need this?</a>
-      </div>
+    <p>
+      Hello and welcome to Super Survey!
+    </p>
+
+    <p>
+      Please identify yourself with either your email address or phone number.
+    </p>
+
+    <div class="control has-icons-left has-icons-right">
+      <input class="input" type="email"
+              placeholder="Email address"
+              :disabled="valid.phone"
+              @keydown.enter="identifyUser"
+              v-model="email">
+      <span class="icon is-left">
+        <i class="fas fa-envelope"></i>
+      </span>
+      <span v-if="valid.email" class="icon is-right tick">
+        <i class="fas fa-check"></i>
+      </span>
     </div>
+
+    <div class="control has-icons-left has-icons-right">
+      <input class="input" type="tel"
+              placeholder="Phone number"
+              :disabled="valid.email"
+              @keydown.enter="identifyUser"
+              v-model="phone">
+      <span class="icon is-left">
+        <i class="fas fa-phone"></i>
+      </span>
+      <span v-if="valid.phone" class="icon is-right tick">
+        <i class="fas fa-check"></i>
+      </span>
+    </div>
+
+    <span class="button subtitle is-4 is-link"
+          :disabled="!eitherValid"
+          @click="identifyUser">OK</span>
+
+    <h2>
+      Why do we need to do this?
+    </h2>
+    <p>
+      We need your email or phone number so that we can:
+    </p>
+    <ul>
+      <li>Tell you apart from other people</li>
+      <li>Track your answers over time</li>
+    </ul>
   </div>
 </public-container>
 </template>
 
 <script>
 import PublicContainer from '@/components/Display/PublicContainer.vue';
-import { randomThing } from '@/thing-generator';
 
 export default {
   components: {
@@ -121,9 +91,6 @@ export default {
     id() {
       return (this.valid.email ? this.email : this.phone).trim();
     },
-    okAction() {
-      return this.stage === 'signup' ? this.signUp : this.login;
-    },
   },
   watch: {
     email(v) {
@@ -146,11 +113,10 @@ export default {
     fail() {
       this.loginError = true;
     },
-    signUp() {
+    identifyUser() {
       if (this.eitherValid) {
         const payload = {
           signedUp: new Date(),
-          anonID: randomThing(),
         };
         if (this.valid.email) {
           payload.idType = 'email';
@@ -166,19 +132,6 @@ export default {
             // don't wait for the set, we can continue
             this.success({ data: () => payload });
           });
-      }
-    },
-    login() {
-      if (this.email !== '') {
-        this.requestLogin(this.email)
-          .then(this.success)
-          .catch(this.fail);
-      } else if (this.phone !== '') {
-        this.requestLogin(this.phone)
-          .then(this.success)
-          .catch(this.fail);
-      } else {
-        this.fail();
       }
     },
     requestLogin(id) {
