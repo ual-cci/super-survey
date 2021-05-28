@@ -5,38 +5,27 @@
   <section class="main-content columns is-fullheight">
     <admin-side-menu :projects="projectList"></admin-side-menu>
 
-    <div id="projects" class="container column is-10">
+    <div id="projects" class="container column">
       <div class="projects">
         <div class="intro">
           <div class="add">
-            <input v-if="addProjectInputVisible"
-                  v-model="newProjectName"
-                  class="input" type="text" ref="newProjectInput"
-                  v-on:keydown.enter="addProject"/>
-            <a class="button is-primary"
-                    :disabled="addProjectInputVisible && newProjectName === ''"
-                    @click="addProject">
-              <i class="fas fa-plus-circle"></i>
-              Add New Project
-            </a>
+            <input v-model="newProjectName"
+                   class="input"
+                   type="text"
+                   ref="newProjectInput"
+                   placeholder="Create Project"
+                   v-on:keydown.enter="addProject"/>
           </div>
         </div>
 
         <transition name="fade">
           <div v-if="projects" class="project-list">
-            <project v-for="project in projectList" :key="project.id"
-                    :project="project"
-                    :user="user">
-            </project>
+            <project-overview v-for="project in projectList" :key="project.id"
+                    :project="project">
+            </project-overview>
           </div>
         </transition>
       </div>
-
-      <prompt :show="!user.displayName"
-              :intro="'Looks like this is the first time you\'ve signed in.'"
-              :text="'What\'s your name?'"
-              @set="setUserName">
-      </prompt>
     </div>
   </section>
 </div>
@@ -45,20 +34,16 @@
 <script>
 import Vue from 'vue';
 import { mapState, mapGetters } from 'vuex';
-import AdminNarrow from '@/components/Display/AdminNarrow.vue';
 import AdminHeader from '@/components/Display/AdminHeader.vue';
-import Project from '@/components/ProjectsDashboard/Project.vue';
-import Prompt from '@/components/Prompt.vue';
 import AdminSideMenu from '@/components/AdminSideMenu.vue';
+import ProjectOverview from '@/components/ProjectsDashboard/ProjectOverview.vue';
 
 export default {
   name: 'projects',
   components: {
-    AdminNarrow,
     AdminHeader,
     AdminSideMenu,
-    Project,
-    Prompt,
+    ProjectOverview,
   },
   data() {
     return {
@@ -123,6 +108,8 @@ export default {
     },
   },
   created() {
+    this.$store.commit('loadProjects');
+    
     if (this.$auth.currentUser) {
       if (this.noProjects || !this.loadedAllProjects) {
         this.$store.commit('clearProjects');
@@ -171,7 +158,6 @@ aside.menu {
   }
 
   .add {
-    float: right;
     input {
       max-width: 200px;
       display: inline-block;

@@ -34,8 +34,27 @@ export default new Vuex.Store({
     fontSize: 16,
     surveyIDMap: {},
     demographics: {},
+
+    admin: {
+      projectList: [],
+      projectListLoading: false,
+      surveyList: [],
+      surveyListLoading: false,
+      currentProjectID: null,
+      currentSurveyID: null,
+    },
   },
   mutations: {
+    loadAdminProjects(state) {
+      console.log('loading projects');
+      
+    },
+    setEditProject(state, project) {
+      Vue.set(state, 'editProject', project);
+    },
+    setEditSurveys(state, surveys) {
+      Vue.set(state, 'editSurveys', surveys);
+    },
     addProject(state, project) {
       Vue.set(state.projects, project.id, project);
     },
@@ -51,6 +70,7 @@ export default new Vuex.Store({
     },
     setSurveys(state, payload) {
       const { project, surveys } = payload;
+      console.log('setSurveys: state=', state);
       Vue.set(state.projects[project.id], 'surveys', surveys);
       surveys.forEach((survey, index) => {
         state.surveyIDMap[survey.id] = {
@@ -58,6 +78,7 @@ export default new Vuex.Store({
           index,
         };
       });
+      
     },
     syncSurveys(state) {
       if (state.projects) {

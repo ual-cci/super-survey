@@ -6,8 +6,7 @@
   <div v-if="projects" class="project-list">
     <ul class="menu-list">
       <li v-for="project in projects" :key="project.id"
-          :project="project"
-          :user="user">
+          :project="project">
           <router-link :to="{
                           name: 'project-details',
                           params: { projectID: project.id }
