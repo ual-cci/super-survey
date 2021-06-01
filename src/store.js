@@ -37,20 +37,29 @@ export default new Vuex.Store({
 
     admin: {
       projectList: [],
-      projectListLoading: false,
+      // projectListLoading: false,
       surveyList: [],
-      surveyListLoading: false,
-      currentProjectID: null,
-      currentSurveyID: null,
+      // surveyListLoading: false,
+
+      editProject: null,
+      editSurvey: null,
+
+      /* currentProjectID: null,
+      currentSurveyID: null, */
     },
   },
   mutations: {
-    loadAdminProjects(state) {
-      console.log('loading projects');
-      
+    setAdminProjects(state, projectList) {
+      console.log('setting admin projects');
+      console.log('  projectList=', projectList);
+      // state.admin.projectList = projectList;
+      Vue.set(state.admin, 'projectList', projectList);
     },
     setEditProject(state, project) {
-      Vue.set(state, 'editProject', project);
+      //Vue.set(state, 'editProject', project);
+      //state.admin.editProject = project;
+      console.log('store.commit.setEditProject: project=', project);
+      Vue.set(state.admin, 'editProject', project);
     },
     setEditSurveys(state, surveys) {
       Vue.set(state, 'editSurveys', surveys);
@@ -120,6 +129,12 @@ export default new Vuex.Store({
     },
   },
   getters: {
+    getAdminProjectList: state => state.admin.projectList,
+    getAdminEditProject: state => state.admin.editProject,
+
+    projectList(state) {
+      return state.admin.projectList;
+    },
     noProjects: (state) => {
       return Object.keys(state.projects).length === 0;
     },
@@ -191,7 +206,41 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    getProject({ state, commit }, { id }) {
+    loadProjects({ state, commit }) {
+      return new Promise((resolve) => {
+        console.log('store.actions.loadProjects');
+        if (state.admin.projectList.length === 0) {
+          firebase.firestore().collection('projects')
+            .get()
+            .then((querySnapshot) => {
+              const projects = querySnapshot.docs.map((doc) => {
+                return {
+                  ...doc.data(),
+                  id: doc.id,
+                };
+              });
+              commit('setAdminProjects', projects);
+              resolve();
+            });
+        } else {
+          resolve();
+        }
+      });
+    },
+    findEditProject({ state, commit, getters }, projectID) {
+      return new Promise((resolve) => {
+        console.log('store.findEditProject: projectID=', projectID);
+        console.log('  projectList=', [...state.admin.projectList]);
+        commit(
+          'setEditProject',
+          state.admin.projectList.find(
+            (project) => project.id === projectID,
+          ),
+        );
+        resolve();
+      });
+    },
+    /* getProject({ state, commit }, { id }) {
       return new Promise((resolve) => {
         if (state.projects[id]) {
           resolve(state.projects[id]);
@@ -209,7 +258,7 @@ export default new Vuex.Store({
             });
         }
       });
-    },
+    }, */
     getUser({ state }) {
       if (state.user.id && !state.user.anonID) {
         return firebase.firestore().collection('users').doc(state.user.id)
