@@ -34,17 +34,24 @@ export default {
   },
   data() {
     return {
+      projectList: [],
     };
   },
-  computed: {
+  /* computed: {
     projectList() {
       return this.$store.state.admin.projectList;
     },
-  },
+  }, */
   methods: {
   },
   created() {
-    this.$store.dispatch('loadProjects');
+    this.$store.dispatch('loadProjects')
+      .then(() => {
+        const { projectList } = this.$store.getters;
+        console.log('Projects.created: projectList=', projectList);
+        this.projectList = projectList;
+
+      });
   },
 };
 </script>

@@ -30,12 +30,17 @@ const adminStore = {
   },
   getters: {
     getAdminProjectList: state => state.admin.projectList,
-    // getAdminEditProject: state => state.admin.editProject,
-    projectList: state => state.admin.projectList,
-    getAdminEditProject: (state) => {
+    getAdminEditProject: state => state.admin.editProject,
+    // projectList: state => state.admin.projectList,
+    /* getAdminEditProject: (state) => {
       console.log('AdminStore.getAdminEditProject');
       console.log('  state.admin.editProject=', state.admin.editProject);
       return state.admin.editProject;
+    }, */
+    projectList: (state) => {
+      console.log('adminStore.getters.projectList');
+      console.log('  projectList=', state.admin.projectList);
+      return state.admin.projectList;
     },
   },
   actions: {
