@@ -8,6 +8,11 @@
     <div id="project-details" class="container column">
       <div v-if="project">
         <h1>{{project.name}}</h1>
+        <ul id='survey-list'>
+          <li v-for="survey in surveyList" :key="survey.id" :v-model="surveyList">
+            {{survey.title}}
+          </li>
+        </ul>
       </div>
       <div v-else>
         <h2>Project is loading...</h2>
@@ -21,7 +26,6 @@
 
 import AdminHeader from '@/components/Display/AdminHeader.vue';
 import AdminSideMenu from '@/components/AdminSideMenu.vue';
-import Vue from 'vue';
 
 export default {
   name: 'project-details',
@@ -35,18 +39,24 @@ export default {
   data() {
     return {
       project: null,
+      surveyList: [],
     };
   },
   methods: {
-    setLoadedSurveys(projectID) {
+    /* async setLoadedSurveys(projectID) {
+      const surveys = await this.$store.dispatch('findProjectSurveys', projectID);
+      console.log('ProjectDetails.setLoadedSurveys: surveys=', surveys);
+      this.surveyList = surveys;
+    }, */
+    async setActiveProject(projectID) {
+      const foundProject = await this.$store.dispatch('findEditProject', projectID);
+      console.log('setting this.project=', foundProject);
+      this.project = foundProject;
+      // this.setLoadedSurveys(projectID);
 
-    },
-    setActiveProject(projectID) {
-      return this.$store.dispatch('findEditProject', projectID)
-        .then((foundProject) => {
-          console.log('setting this.project=', foundProject);
-          this.project = foundProject;
-        });
+      const surveys = await this.$store.dispatch('findProjectSurveys', projectID);
+      console.log('ProjectDetails.setLoadedSurveys: surveys=', surveys);
+      this.surveyList = surveys;
     },
   },
   watch: {
@@ -56,11 +66,11 @@ export default {
       this.setActiveProject(to.params.projectID);
     },
   },
-  created() {
+  async created() {
     console.log('ProjectDetails.created');
 
-    this.$store.dispatch('loadProjects')
-      .then(() => this.setActiveProject(this.projectID));
+    await this.$store.dispatch('loadProjects');
+    this.setActiveProject(this.projectID);
   },
 };
 </script>

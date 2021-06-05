@@ -50,7 +50,6 @@ export default {
         const { projectList } = this.$store.getters;
         console.log('Projects.created: projectList=', projectList);
         this.projectList = projectList;
-
       });
   },
 };
@@ -58,10 +57,6 @@ export default {
 
 <style lang="scss">
 @import "@/styles/admin.scss";
-
-.container {
-
-}
 
 aside.menu {
   background-color: #eee;
