@@ -5,12 +5,16 @@ import '@firebase/firestore';
 const adminStore = {
   state: () => ({
     admin: {
+      // projectList: Projects the currently logged in user has access to
       projectList: [],
-      // projectListLoading: false,
-      surveyList: [],
-      // surveyListLoading: false,
 
+      // editProject: The selected project to work with
       editProject: null,
+
+      // surveyList: Surveys in the editProject 
+      surveyList: [],
+
+      // editSurvey: The user-selected survey to manipulate
       editSurvey: null,
 
       /* currentProjectID: null,
@@ -30,6 +34,16 @@ const adminStore = {
     setEditSurveys(state, surveys) {
       console.log('store.commit.setEditProject: surveys=', surveys);
       Vue.set(state.admin, 'surveyList', surveys);
+    },
+
+    clearEditProject(state) {
+      Vue.set(state.admin, 'editProject', null);
+    },
+    clearEditSurvey(state) {
+      Vue.set(state.admin, 'editSurvey', null);
+    },
+    clearSurveyList(state) {
+      Vue.set(state.admin, 'surveyList', []);
     },
   },
   getters: {
@@ -89,6 +103,11 @@ const adminStore = {
 
       commit('setEditSurveys', surveys);
       return surveys;
+    },
+    clearEditProject({ commit }) {
+      commit('clearEditProject');
+      commit('clearEditSurvey');
+      commit('clearSurveyList');
     },
   },
 };

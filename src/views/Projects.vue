@@ -44,6 +44,10 @@ export default {
   }, */
   methods: {
   },
+  beforeMount() {
+    console.log('Projects.vue beforeMount()');
+    this.$store.dispatch('clearEditProject');
+  },
   created() {
     this.$store.dispatch('loadProjects')
       .then(() => {

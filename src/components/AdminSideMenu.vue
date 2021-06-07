@@ -1,7 +1,7 @@
 <template>
 <aside class="column menu is-2  section is-fullheight">
   <p class="menu-label">
-    Projects
+    <router-link :to="{name: 'projects'}">Projects</router-link>
   </p>
   <div class="project-list">
     <ul class="menu-list" :key="fudge">
