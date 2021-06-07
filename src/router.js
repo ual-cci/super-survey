@@ -64,6 +64,7 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    /* guest routes */
     {
       path: '/landing',
       name: 'landing',
@@ -74,15 +75,16 @@ export default new Router({
     {
       path: '/admin/:nextPage?',
       name: 'admin-login',
-      component: () => import('./views/Login.vue'),
+      component: () => import('./views/Admin/Login.vue'),
       beforeEnter: wrapLogger(),
       meta: { publicFacing: true },
       props: true,
     },
+    /* admin routes */
     {
       path: '/projects',
       name: 'projects',
-      component: () => import('./views/Projects.vue'),
+      component: () => import('./views/Admin/Projects.vue'),
       beforeEnter: wrapLogger(guards.onlyAdmin),
       meta: { hasHeader: true },
     },
@@ -90,14 +92,14 @@ export default new Router({
       path: '/projects/:projectID',
       name: 'project-details',
       props: true,
-      component: () => import('./views/ProjectDetails.vue'),
+      component: () => import('./views/Admin/ProjectDetails.vue'),
       beforeEnter: guards.onlyAdmin,
       meta: { hasHeader: true },
     },
     {
       path: '/survey/stats/:surveyID',
       name: 'survey-stats',
-      component: () => import('./views/SurveyStats.vue'),
+      component: () => import('./views/Admin/SurveyStats.vue'),
       beforeEnter: wrapLogger(guards.onlyAdmin),
       meta: { hasHeader: true },
       props: true,
@@ -105,7 +107,7 @@ export default new Router({
     {
       path: '/answers/edit/:surveyID?/:answerID?',
       name: 'answer-editor',
-      component: () => import('./views/AnswerEditor.vue'),
+      component: () => import('./views/Admin/AnswerEditor.vue'),
       beforeEnter: wrapLogger(guards.onlyAdmin),
       meta: { hasHeader: true },
       props: true,
@@ -113,7 +115,7 @@ export default new Router({
     {
       path: '/answers/user/:anonID',
       name: 'user-answers',
-      component: () => import('./views/UserAnswers.vue'),
+      component: () => import('./views/Admin/UserAnswers.vue'),
       beforeEnter: wrapLogger(guards.onlyAdmin),
       meta: { hasHeader: true },
       props: true,
@@ -121,10 +123,17 @@ export default new Router({
     {
       path: '/survey/edit/:surveyID',
       name: 'survey-designer',
-      component: () => import('./views/SurveyDesigner.vue'),
+      component: () => import('./views/Admin/SurveyDesigner.vue'),
       beforeEnter: wrapLogger(guards.onlyAdmin),
       props: true,
     },
+    {
+      path: '/email-signups',
+      name: 'email-signups',
+      beforeEnter: wrapLogger(guards.onlyAdmin),
+      component: () => import('./views/Admin/EmailSignups.vue'),
+    },
+    /* participant routes */
     {
       path: '/survey/:surveyID',
       name: 'survey',
@@ -145,12 +154,7 @@ export default new Router({
       path: '/s/:surveySlug',
       beforeEnter: wrapLogger(guards.surveyRedirect),
     },
-    {
-      path: '/email-signups',
-      name: 'email-signups',
-      beforeEnter: wrapLogger(guards.onlyAdmin),
-      component: () => import('./views/EmailSignups.vue'),
-    },
+    /* misc routes */
     {
       path: '/',
       name: 'root',
