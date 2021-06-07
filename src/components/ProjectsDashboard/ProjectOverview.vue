@@ -1,4 +1,3 @@
-// project overview
 <template>
 <li class='project-overview'>
   <h2>
@@ -6,7 +5,7 @@
               {{project.name}}
     </router-link>
   </h2>
-  <p>Some more stats about this project</p>
+  <p>X surveys, Y are live.</p>
 </li>
 </template>
 
@@ -38,5 +37,6 @@ export default {
 
 .project-overview {
   list-style-type: none;
+  margin-bottom: 1em;
 }
 </style>

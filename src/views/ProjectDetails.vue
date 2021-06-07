@@ -8,10 +8,9 @@
     <div id="project-details" class="container column">
       <div v-if="project">
         <h1>{{project.name}}</h1>
+        <p>Has {{surveyCount}} surveys</p>
         <ul id='survey-list'>
-          <li v-for="survey in surveyList" :key="survey.id" :v-model="surveyList">
-            {{survey.title}}
-          </li>
+          <survey-summary v-for="survey in surveyList" :key="survey.id" :v-model="surveyList" :survey="survey" />
         </ul>
       </div>
       <div v-else>
@@ -26,12 +25,14 @@
 
 import AdminHeader from '@/components/Display/AdminHeader.vue';
 import AdminSideMenu from '@/components/AdminSideMenu.vue';
+import SurveySummary from '@/components/ProjectsDashboard/SurveySummary.vue';
 
 export default {
   name: 'project-details',
   components: {
     AdminHeader,
     AdminSideMenu,
+    SurveySummary,
   },
   props: {
     projectID: String,
@@ -41,6 +42,11 @@ export default {
       project: null,
       surveyList: [],
     };
+  },
+  computed: {
+    surveyCount() {
+      return this.surveyList.length;
+    }
   },
   methods: {
     /* async setLoadedSurveys(projectID) {

@@ -9,11 +9,11 @@
       <div class="projects">
         <h1>Projects</h1>
 
-        <div v-if="projectList" class="project-list">
+        <ul v-if="projectList" class="project-list">
           <project-overview v-for="project in projectList" :key="project.id"
                       :project="project">
           </project-overview>
-        </div>
+        </ul>
       </div>
     </div>
   </section>
