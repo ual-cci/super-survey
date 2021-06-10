@@ -1,7 +1,7 @@
 <template>
 <div class='is-fullheight'>
   <admin-header></admin-header>
-
+  
   <section class="main-content columns is-fullheight">
     <admin-side-menu></admin-side-menu>
 
@@ -10,13 +10,23 @@
         <h1>Projects</h1>
 
         <ul v-if="projectList" class="project-list">
-          <project-overview v-for="project in projectList" :key="project.id"
-                      :project="project">
-          </project-overview>
+          <project-overview
+            v-for="project in projectList"
+            :key="project.id"
+            :project="project"
+            :delete-project-callback="doDeleteProject" />
         </ul>
+      </div>
+      <div id='add-project'>
+        <a class="button" @click="addProject">
+          <i class="fas fa-plus-circle"></i>&nbsp;
+          Add New Project
+        </a>
       </div>
     </div>
   </section>
+  <confirm-popup ref='confirmDeletePopup' />
+  <create-project-popup ref='createProjectPopup' />
 </div>
 </template>
 
@@ -24,6 +34,8 @@
 import AdminHeader from '@/components/Display/AdminHeader.vue';
 import AdminSideMenu from '@/components/AdminSideMenu.vue';
 import ProjectOverview from '@/components/ProjectsDashboard/ProjectOverview.vue';
+import ConfirmPopup from '@/components/admin/popups/ConfirmPopup.vue';
+import CreateProjectPopup from '@/components/admin/popups/CreateProjectPopup.vue';
 
 export default {
   name: 'projects',
@@ -31,10 +43,13 @@ export default {
     AdminHeader,
     AdminSideMenu,
     ProjectOverview,
+    ConfirmPopup,
+    CreateProjectPopup,
   },
   data() {
     return {
       projectList: [],
+      newProjectName: '',
     };
   },
   /* computed: {
@@ -43,6 +58,22 @@ export default {
     },
   }, */
   methods: {
+    addProject() {
+      console.log('Projects.addProject:');
+      this.$refs.createProjectPopup.show();
+    },
+    async doDeleteProject(project) {
+      console.log('Projects.doDeleteProject: project=', project);
+
+      const okay = await this.$refs.confirmDeletePopup.show({
+        title: 'Delete Project?',
+        message: `Confirm project "${project.name}" delete? Once deleted the project (and surveys) will be gone forever`,
+      });
+      console.log('demoPopup: okay=', okay);
+      if (okay) {
+        this.$store.dispatch('deleteProject', project);
+      }
+    },
   },
   beforeMount() {
     console.log('Projects.vue beforeMount()');
@@ -66,39 +97,13 @@ aside.menu {
   background-color: #eee;
 }
 
-#projects .projects {
-
-  div.intro {
-    margin-bottom: 20px;
-
-    & h1.title {
-      margin-bottom: 5px;
-    }
-    & h2.subtitle {
-      padding-top: 5px;
-    }
-  }
-
-  .add {
+#projects {
+  #add-project {
     input {
       max-width: 200px;
       display: inline-block;
       margin-right: 5px;
     }
-  }
-
-  .project-list {
-    clear: both;
-  }
-
-  span, a {
-    i.fas {
-      margin-right: 5px;
-    }
-  }
-
-  .survey-title.closed {
-    color: #ddd;
   }
 }
 

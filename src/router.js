@@ -93,7 +93,7 @@ export default new Router({
       name: 'project-details',
       props: true,
       component: () => import('./views/Admin/ProjectDetails.vue'),
-      beforeEnter: guards.onlyAdmin,
+      beforeEnter: wrapLogger(guards.onlyAdmin),
       meta: { hasHeader: true },
     },
     {

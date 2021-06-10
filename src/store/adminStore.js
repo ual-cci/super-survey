@@ -45,6 +45,21 @@ const adminStore = {
     clearSurveyList(state) {
       Vue.set(state.admin, 'surveyList', []);
     },
+
+    appendAdminProject(state, newProject) {
+      const projectList = [
+        ...state.admin.projectList,
+        newProject,
+      ];
+      Vue.set(state.admin, 'projectList', projectList);
+    },
+    removeAdminProject(state, project) {
+      const index = state.admin.projectList.findIndex(prj => prj.id === project.id);
+      if (index === -1) return;
+
+      console.log('removeAdminProject: index=', index);
+      Vue.delete(state.admin.projectList, index);
+    },
   },
   getters: {
     getAdminProjectList: state => state.admin.projectList,
@@ -108,6 +123,46 @@ const adminStore = {
       commit('clearEditProject');
       commit('clearEditSurvey');
       commit('clearSurveyList');
+    },
+    async addProject({ commit }, payload) {
+      const { projectName, user } = payload;
+
+      const project = {
+        name: projectName,
+        created: new Date(),
+        owner: {
+          email: user.email,
+        },
+        visibleTo: [user.email],
+        participation: null,
+        consent: null,
+        preambleStatus: 'disabled',
+        demographicsStatus: 'disabled',
+      };
+
+      const docRef = await firebase
+        .firestore()
+        .collection('projects')
+        .add(project);
+
+      project.id = docRef.id;
+      console.log('AdminStore.addProject: project=', project);
+      commit('appendAdminProject', project);
+      return project;
+    },
+    async deleteProject({ commit }, project) {
+      if (project) {
+        console.log('deleteProject: project=', project);
+        await firebase
+          .firestore()
+          .collection('projects')
+          .doc(project.id)
+          .delete();
+
+        // also delete all the surveys?
+
+        commit('removeAdminProject', project);
+      }
     },
   },
 };
