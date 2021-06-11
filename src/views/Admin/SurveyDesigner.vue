@@ -624,7 +624,7 @@ export default {
 
       this.reflowElements({ save: false });
 
-      this.$store.dispatch('getProject', { id: this.survey.project.id })
+      this.$store.dispatch('findEditProject', this.survey.project.id)
         .then((project) => {
           this.isPublishable = project.preambleStatus === 'complete';
         });
