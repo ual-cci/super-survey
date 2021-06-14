@@ -6,7 +6,6 @@
     </router-link>
   </h2>
   <p>X surveys, Y are live.</p>
-  <button class='delete-button' @click="deleteProjectCallback(project)">Delete</button>
 </li>
 </template>
 
@@ -18,10 +17,6 @@ export default {
     project: {
       required: true,
       type: Object,
-    },
-    deleteProjectCallback: {
-      required: true,
-      type: Function,
     },
   },
   components: {
@@ -45,10 +40,6 @@ export default {
 .project-overview {
   list-style-type: none;
   margin-bottom: 1em;
-
-  button {
-    display: inline-block;
-  }
 
   &:hover {
     background-color: #eee;

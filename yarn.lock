@@ -675,6 +675,13 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@crow1796/vue-bulma-tabs@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@crow1796/vue-bulma-tabs/-/vue-bulma-tabs-1.0.8.tgz#ffce376bed1421242806c645f5faa81f24bd0009"
+  integrity sha512-ANjwR/Jns3Sosuq9xqOf5jornEKZ6v6QQCNGxp0sVl8vmuMlqkJHWlz/F46lzgfuNiETXVjFYuNccweU6u3Ypg==
+  dependencies:
+    vue "^2.6.6"
+
 "@dabh/diagnostics@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@dabh/diagnostics/-/diagnostics-2.0.2.tgz#290d08f7b381b8f94607dc8f471a12c675f9db31"
@@ -12846,6 +12853,11 @@ vue@^2.6.11:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
   integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==
+
+vue@^2.6.6:
+  version "2.6.14"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.14.tgz#e51aa5250250d569a3fbad3a8a5a687d6036e235"
+  integrity sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ==
 
 vuedraggable@^2.23.2:
   version "2.24.3"

@@ -9,6 +9,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@crow1796/vue-bulma-tabs": "^1.0.8",
     "babel-polyfill": "^6.26.0",
     "bulma": "^0.7.5",
     "chart.js": "^2.9.3",

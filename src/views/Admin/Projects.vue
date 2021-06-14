@@ -13,8 +13,7 @@
           <project-overview
             v-for="project in projectList"
             :key="project.id"
-            :project="project"
-            :delete-project-callback="doDeleteProject" />
+            :project="project" />
         </ul>
       </div>
       <div id='add-project'>
@@ -52,27 +51,10 @@ export default {
       newProjectName: '',
     };
   },
-  /* computed: {
-    projectList() {
-      return this.$store.state.admin.projectList;
-    },
-  }, */
   methods: {
     addProject() {
       console.log('Projects.addProject:');
       this.$refs.createProjectPopup.show();
-    },
-    async doDeleteProject(project) {
-      console.log('Projects.doDeleteProject: project=', project);
-
-      const okay = await this.$refs.confirmDeletePopup.show({
-        title: 'Delete Project?',
-        message: `Confirm project "${project.name}" delete? Once deleted the project (and surveys) will be gone forever`,
-      });
-      console.log('demoPopup: okay=', okay);
-      if (okay) {
-        this.$store.dispatch('deleteProject', project);
-      }
     },
   },
   beforeMount() {
