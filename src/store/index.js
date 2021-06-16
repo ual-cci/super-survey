@@ -179,25 +179,6 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    /* getProject({ state, commit }, { id }) {
-      return new Promise((resolve) => {
-        if (state.projects[id]) {
-          resolve(state.projects[id]);
-        } else {
-          firebase.firestore().collection('projects').doc(id)
-            .get()
-            .then((docRef) => {
-              if (docRef.exists) {
-                const project = docRef.data();
-                project.id = docRef.id;
-                project.surveys = null;
-                commit('addProject', project);
-                resolve(project);
-              }
-            });
-        }
-      });
-    }, */
     getUser({ state }) {
       if (state.user.id && !state.user.anonID) {
         return firebase.firestore().collection('users').doc(state.user.id)

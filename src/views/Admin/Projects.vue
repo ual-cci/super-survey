@@ -9,9 +9,9 @@
       <div class="projects">
         <h1>Projects</h1>
 
-        <ul v-if="projectList" class="project-list">
+        <ul v-if="sortedProjectList" class="project-list">
           <project-overview
-            v-for="project in projectList"
+            v-for="project in sortedProjectList"
             :key="project.id"
             :project="project" />
         </ul>
@@ -47,10 +47,16 @@ export default {
   },
   data() {
     return {
-      projectList: [],
-      newProjectName: '',
+      sortedProjectList: [],
+      /* projectList: [],
+      newProjectName: '', */
     };
   },
+  /* computed: {
+    sortedProjectList() {
+      return this.$store.getSortedProjectList;
+    },
+  }, */
   methods: {
     addProject() {
       console.log('Projects.addProject:');
@@ -61,13 +67,18 @@ export default {
     console.log('Projects.vue beforeMount()');
     this.$store.dispatch('clearEditProject');
   },
-  created() {
-    this.$store.dispatch('loadProjects')
+  async created() {
+    await this.$store.dispatch('loadDataForAdmin', this.$auth.currentUser);
+
+    this.sortedProjectList = this.$store.getters.getSortedProjectList;
+    console.log('sortedProjectList=', this.sortedProjectList);
+
+    /* this.$store.dispatch('loadProjects')
       .then(() => {
         const { projectList } = this.$store.getters;
         console.log('Projects.created: projectList=', projectList);
         this.projectList = projectList;
-      });
+      }); */
   },
 };
 </script>

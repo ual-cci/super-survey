@@ -20,13 +20,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'admin-side-menu',
   data() {
     return {
       fudge: 0,
+      // projectList: [], // HACK
     };
   },
   watch: {
@@ -37,7 +38,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      projectList: 'getAdminProjectList',
+      projectList: 'getSortedProjectList',
       editProject: 'getAdminEditProject',
     }),
   },
