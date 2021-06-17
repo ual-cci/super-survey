@@ -4,7 +4,7 @@
     <router-link :to="{name: 'projects'}">Projects</router-link>
   </p>
   <div class="project-list">
-    <ul class="menu-list" :key="fudge">
+    <ul class="menu-list">
       <li v-for="project in projectList" :key="project.id">
         <router-link :to="{
                         name: 'project-details',
@@ -24,12 +24,6 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'admin-side-menu',
-  data() {
-    return {
-      fudge: 0,
-      // projectList: [], // HACK
-    };
-  },
   watch: {
     $route() {
       console.log('AdminSideMenu.route!');
@@ -52,10 +46,6 @@ export default {
     refreshView() {
       console.log('AdminSideMenu.refreshView');
       this.$forceUpdate();
-      //this.fudge += 1;
-      // const { projectList, editProject } = this.$store.state.admin;
-      // this.projectList = projectList;
-      // this.editProject = editProject;
     },
   },
   created() {
@@ -69,5 +59,4 @@ export default {
 aside.menu {
   background-color: #eee;
 }
-
 </style>

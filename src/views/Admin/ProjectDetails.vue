@@ -46,6 +46,7 @@ import AdminHeader from '@/components/Display/AdminHeader.vue';
 import AdminSideMenu from '@/components/AdminSideMenu.vue';
 import SurveySummary from '@/components/ProjectsDashboard/SurveySummary.vue';
 import ConfirmPopup from '@/components/admin/popups/ConfirmPopup.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'project-details',
@@ -62,7 +63,6 @@ export default {
   },
   data() {
     return {
-      project: null,
       surveyList: [],
     };
   },
@@ -70,6 +70,7 @@ export default {
     surveyCount() {
       return this.surveyList.length;
     },
+    ...mapGetters({ project: 'getEditProject' }),
   },
   methods: {
     /* async setLoadedSurveys(projectID) {
@@ -77,7 +78,7 @@ export default {
       console.log('ProjectDetails.setLoadedSurveys: surveys=', surveys);
       this.surveyList = surveys;
     }, */
-    async setActiveProject(projectID) {
+    /* async setActiveProject(projectID) {
       const foundProject = await this.$store.dispatch('findEditProject', projectID);
       console.log('setting this.project=', foundProject);
       this.project = foundProject;
@@ -86,7 +87,7 @@ export default {
       const surveys = await this.$store.dispatch('findProjectSurveys', projectID);
       console.log('ProjectDetails.setLoadedSurveys: surveys=', surveys);
       this.surveyList = surveys;
-    },
+    }, */
     async doDeleteProject() {
       console.log('Projects.doDeleteProject: project=', this.project);
 
@@ -105,14 +106,16 @@ export default {
     $route(to) {
       console.log('ProjectDetails.route!');
       console.log('  to.params=', to.params);
-      this.setActiveProject(to.params.projectID);
+      // this.setActiveProject(to.params.projectID);
+      this.$store.dispatch('setEditProjectByID', to.params.projectID);
     },
   },
   async created() {
     console.log('ProjectDetails.created');
 
-    await this.$store.dispatch('loadProjects');
-    this.setActiveProject(this.projectID);
+    await this.$store.dispatch('loadDataForAdmin', this.$auth.currentUser);
+
+    this.$store.dispatch('setEditProjectByID', this.projectID);
   },
   mounted() {
   },

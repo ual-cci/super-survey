@@ -6,26 +6,31 @@ import _ from 'lodash';
 /* class Cacheable {
   thing: null, // thing to be 
   isLoading: false,
-  loadedAt: null
+  loadedAt: null,
+  loaderFunction: null
 } */
 
 const adminStore = {
   state: () => ({
     admin: {
+      tablesAreLoaded: false,
+
       projectTable: {},
       surveyTable: {},
 
       // projectList: Projects the currently logged in user has access to
-      projectList: [],
+      // projectList: [],
 
       // editProject: The selected project to work with
-      editProject: null,
+      editProjectID: null,
+      // editProject: null,
 
       // surveyList: Surveys in the editProject 
-      surveyList: [],
+      // surveyList: [],
 
       // editSurvey: The user-selected survey to manipulate
-      editSurvey: null,
+      editSurveyID: null,
+      // editSurvey: null,
 
       /* currentProjectID: null,
       currentSurveyID: null, */
@@ -34,21 +39,13 @@ const adminStore = {
   mutations: {
     setAdminProjects(state, projectTable) {
       Vue.set(state.admin, 'projectTable', projectTable);
-      console.log('setAdminProjects: projectTable=', projectTable);
-      // state.admin.projectList
     },
     setAdminSurveys(state, surveyTable) {
       Vue.set(state.admin, 'surveyTable', surveyTable);
-      console.log('setAdminSurveys: surveyTable=', surveyTable);
     },
-    /* setAdminProjects(state, projectList) {
-      console.log('setting admin projects');
-      console.log('  projectList=', projectList);
-      Vue.set(state.admin, 'projectList', projectList);
-    }, */
-    setEditProject(state, project) {
-      console.log('store.commit.setEditProject: project=', project);
-      Vue.set(state.admin, 'editProject', project);
+    setEditProjectID(state, projectID) {
+      console.log('store.commit.setEditProject: project=', projectID);
+      Vue.set(state.admin, 'editProjectID', projectID);
     },
     setEditSurveys(state, surveys) {
       console.log('store.commit.setEditProject: surveys=', surveys);
@@ -81,6 +78,7 @@ const adminStore = {
     },
   },
   getters: {
+    
     getSortedProjectList(state) {
       const stringCompare = (f) => {
         return (argA, argB) => {
@@ -96,22 +94,25 @@ const adminStore = {
       projects.sort(stringCompare(x => x.name));
       return projects;
     },
-    getAdminProjectList: state => state.admin.projectList,
-    getAdminEditProject: state => state.admin.editProject,
+    getEditProject: state => state.admin.projectTable[state.admin.editProjectID],
+    // getAdminProjectList: state => state.admin.projectList,
+    // getAdminEditProject: state => state.admin.editProject,
     // projectList: state => state.admin.projectList,
     /* getAdminEditProject: (state) => {
       console.log('AdminStore.getAdminEditProject');
       console.log('  state.admin.editProject=', state.admin.editProject);
       return state.admin.editProject;
     }, */
-    projectList: (state) => {
+    /* projectList: (state) => {
       console.log('adminStore.getters.projectList');
       console.log('  projectList=', state.admin.projectList);
       return state.admin.projectList;
-    },
+    }, */
   },
   actions: {
-    async loadDataForAdmin({ commit }, user) {
+    async loadDataForAdmin({ state, commit }, user) {
+      if (state.admin.tablesAreLoaded) return;
+
       console.log('adminStore.loadDataForAdmin');
       console.log('  user.email=', user.email);
       const projectTable = {};
@@ -156,8 +157,10 @@ const adminStore = {
 
       console.log('  surveys.length=', _.size(surveyTable));
       commit('setAdminSurveys', surveyTable);
+
+      state.admin.tablesAreLoaded = true;
     },
-    async loadProjects({ state, commit }) {
+    /* async loadProjects({ state, commit }) {
       console.log('store.actions.loadProjects');
       if (state.admin.projectList.length === 0) {
         const response = await firebase.firestore().collection('projects').get();
@@ -170,8 +173,11 @@ const adminStore = {
       } else {
         Promise.resolve(state.admin.projectList);
       }
+    }, */
+    setEditProjectByID({ commit }, projectID) {
+      commit('setEditProjectID', projectID);
     },
-    async findEditProject({ state, commit }, projectID) {
+    /* async findEditProject({ state, commit }, projectID) {
       console.log('store.findEditProject: projectID=', projectID);
       console.log('  projectList=', [...state.admin.projectList]);
       const foundProject = state.admin.projectList.find(
@@ -180,7 +186,7 @@ const adminStore = {
       console.log('  foundProject=', foundProject);
       commit('setEditProject', foundProject);
       return foundProject;
-    },
+    }, */
     async findProjectSurveys({ commit }, projectID) {
       console.log('adminStore.findProjectSurveys: projectID=', projectID);
 
