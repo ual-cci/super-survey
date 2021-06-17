@@ -40,7 +40,7 @@ export default {
         projectName: this.newProjectName,
         user: this.$auth.currentUser,
       };
-      const project = await this.$store.dispatch('addProject', payload);
+      const project = await this.$store.dispatch('createProject', payload);
       this.$router.push({
         name: 'project-details',
         params: { projectID: project.id },

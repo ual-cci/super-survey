@@ -50,19 +50,12 @@ const adminStore = {
       Vue.set(state.admin, 'surveyList', []);
     },
 
-    appendAdminProject(state, newProject) {
-      const projectList = [
-        ...state.admin.projectList,
-        newProject,
-      ];
-      Vue.set(state.admin, 'projectList', projectList);
+    addAdminProject(state, newProject) {
+      Vue.set(state.admin.projectTable, newProject.id, newProject);
     },
     removeAdminProject(state, project) {
-      const index = state.admin.projectList.findIndex(prj => prj.id === project.id);
-      if (index === -1) return;
-
-      console.log('removeAdminProject: index=', index);
-      Vue.delete(state.admin.projectList, index);
+      console.log('removeAdminProject: id=', project.id);
+      Vue.delete(state.admin.projectTable, project.id);
     },
   },
   getters: {
@@ -181,7 +174,7 @@ const adminStore = {
       commit('clearEditSurvey');
       commit('clearSurveyList');
     },
-    async addProject({ commit }, payload) {
+    async createProject({ commit }, payload) {
       const { projectName, user } = payload;
 
       const project = {
@@ -204,7 +197,7 @@ const adminStore = {
 
       project.id = docRef.id;
       console.log('AdminStore.addProject: project=', project);
-      commit('appendAdminProject', project);
+      commit('addAdminProject', project);
       return project;
     },
     async deleteProject({ commit }, project) {
