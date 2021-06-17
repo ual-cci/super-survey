@@ -79,21 +79,6 @@ export default {
     },
   },
   methods: {
-    /* async setLoadedSurveys(projectID) {
-      const surveys = await this.$store.dispatch('findProjectSurveys', projectID);
-      console.log('ProjectDetails.setLoadedSurveys: surveys=', surveys);
-      this.surveyList = surveys;
-    }, */
-    /* async setActiveProject(projectID) {
-      const foundProject = await this.$store.dispatch('findEditProject', projectID);
-      console.log('setting this.project=', foundProject);
-      this.project = foundProject;
-      // this.setLoadedSurveys(projectID);
-
-      const surveys = await this.$store.dispatch('findProjectSurveys', projectID);
-      console.log('ProjectDetails.setLoadedSurveys: surveys=', surveys);
-      this.surveyList = surveys;
-    }, */
     async doDeleteProject() {
       console.log('Projects.doDeleteProject: project=', this.project);
 
@@ -112,7 +97,6 @@ export default {
     $route(to) {
       console.log('ProjectDetails.route!');
       console.log('  to.params=', to.params);
-      // this.setActiveProject(to.params.projectID);
       this.$store.dispatch('setEditProjectByID', to.params.projectID);
     },
   },

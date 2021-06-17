@@ -3,13 +3,6 @@ import firebase from '@firebase/app';
 import '@firebase/firestore';
 import _ from 'lodash';
 
-/* class Cacheable {
-  thing: null, // thing to be 
-  isLoading: false,
-  loadedAt: null,
-  loaderFunction: null
-} */
-
 const stringCompare = (f) => {
   return (argA, argB) => {
     const a = f(argA);
@@ -28,22 +21,11 @@ const adminStore = {
       projectTable: {},
       surveyTable: {},
 
-      // projectList: Projects the currently logged in user has access to
-      // projectList: [],
-
       // editProject: The selected project to work with
       editProjectID: null,
-      // editProject: null,
-
-      // surveyList: Surveys in the editProject 
-      // surveyList: [],
 
       // editSurvey: The user-selected survey to manipulate
       editSurveyID: null,
-      // editSurvey: null,
-
-      /* currentProjectID: null,
-      currentSurveyID: null, */
     },
   }),
   mutations: {
@@ -56,10 +38,6 @@ const adminStore = {
     setEditProjectID(state, projectID) {
       console.log('store.commit.setEditProject: project=', projectID);
       Vue.set(state.admin, 'editProjectID', projectID);
-    },
-    setEditSurveys(state, surveys) {
-      console.log('store.commit.setEditProject: surveys=', surveys);
-      Vue.set(state.admin, 'surveyList', surveys);
     },
 
     clearEditProject(state) {
@@ -137,24 +115,11 @@ const adminStore = {
           }
         });
 
-        // projectSurveys.sort(stringCompare(x => x.title));
+        projectSurveys.sort(stringCompare(x => x.title));
 
         return projectSurveys;
       };
     },
-    // getAdminProjectList: state => state.admin.projectList,
-    // getAdminEditProject: state => state.admin.editProject,
-    // projectList: state => state.admin.projectList,
-    /* getAdminEditProject: (state) => {
-      console.log('AdminStore.getAdminEditProject');
-      console.log('  state.admin.editProject=', state.admin.editProject);
-      return state.admin.editProject;
-    }, */
-    /* projectList: (state) => {
-      console.log('adminStore.getters.projectList');
-      console.log('  projectList=', state.admin.projectList);
-      return state.admin.projectList;
-    }, */
   },
   actions: {
     async loadDataForAdmin({ state, commit }, user) {
@@ -207,51 +172,10 @@ const adminStore = {
 
       state.admin.tablesAreLoaded = true;
     },
-    /* async loadProjects({ state, commit }) {
-      console.log('store.actions.loadProjects');
-      if (state.admin.projectList.length === 0) {
-        const response = await firebase.firestore().collection('projects').get();
-        const projects = response.docs.map(doc => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-        commit('setAdminProjects', projects);
-        Promise.resolve(projects);
-      } else {
-        Promise.resolve(state.admin.projectList);
-      }
-    }, */
     setEditProjectByID({ commit }, projectID) {
       commit('setEditProjectID', projectID);
     },
-    /* async findEditProject({ state, commit }, projectID) {
-      console.log('store.findEditProject: projectID=', projectID);
-      console.log('  projectList=', [...state.admin.projectList]);
-      const foundProject = state.admin.projectList.find(
-        project => project.id === projectID,
-      );
-      console.log('  foundProject=', foundProject);
-      commit('setEditProject', foundProject);
-      return foundProject;
-    }, */
-    async findProjectSurveys({ commit }, projectID) {
-      console.log('adminStore.findProjectSurveys: projectID=', projectID);
 
-      const dbPromise = firebase.firestore()
-        .collection('surveys')
-        .where('project.id', '==', projectID)
-        .where('target', '==', 'survey');
-
-      const response = await dbPromise.get();
-
-      const surveys = response.docs.map(doc => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-
-      commit('setEditSurveys', surveys);
-      return surveys;
-    },
     clearEditProject({ commit }) {
       commit('clearEditProject');
       commit('clearEditSurvey');
