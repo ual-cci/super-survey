@@ -5,7 +5,11 @@
               {{project.name}}
     </router-link>
   </h2>
-  <p>{{surveyCount}} surveys, Y are live.</p>
+  <!-- 
+    FIXME: survey counts should be generated algorithmically
+      so proper english grammar can be observed
+  -->
+  <p>{{surveyCount}} surveys, {{liveSurveyCount}} are live.</p>
 </li>
 </template>
 
@@ -24,6 +28,10 @@ export default {
   computed: {
     surveyCount() {
       const counter = this.$store.getters.getProjectSurveyCount;
+      return counter(this.project);
+    },
+    liveSurveyCount() {
+      const counter = this.$store.getters.getProjectLiveSurveyCount;
       return counter(this.project);
     },
   },
@@ -45,11 +53,7 @@ export default {
 
 .project-overview {
   list-style-type: none;
-  margin-bottom: 1em;
-
-  &:hover {
-    background-color: #eee;
-  }
+  margin-bottom: 2em;
 }
 
 

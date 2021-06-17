@@ -61,16 +61,22 @@ export default {
   props: {
     projectID: String,
   },
-  data() {
-    return {
-      surveyList: [],
-    };
-  },
   computed: {
+    ...mapGetters({ 
+      project: 'getEditProject',
+    }),
     surveyCount() {
-      return this.surveyList.length;
+      const counter = this.$store.getters.getProjectSurveyCount;
+      return counter(this.project);
     },
-    ...mapGetters({ project: 'getEditProject' }),
+    liveSurveyCount() {
+      const counter = this.$store.getters.getProjectLiveSurveyCount;
+      return counter(this.project);
+    },
+    surveyList() {
+      const finder = this.$store.getters.getSortedSurveysForProject;
+      return finder(this.project);
+    },
   },
   methods: {
     /* async setLoadedSurveys(projectID) {
@@ -110,10 +116,10 @@ export default {
       this.$store.dispatch('setEditProjectByID', to.params.projectID);
     },
   },
-  created() {
+  async created() {
     console.log('ProjectDetails.created');
 
-    return this.$store.dispatch('loadDataForAdmin', this.$auth.currentUser);
+    await this.$store.dispatch('loadDataForAdmin', this.$auth.currentUser);
   },
   mounted() {
     console.log('ProjectDetails.mounted');

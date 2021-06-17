@@ -10,6 +10,16 @@ import _ from 'lodash';
   loaderFunction: null
 } */
 
+const stringCompare = (f) => {
+  return (argA, argB) => {
+    const a = f(argA);
+    const b = f(argB);
+    if (a < b) return -1;
+    if (a > b) return 1;
+    return 0;
+  };
+};
+
 const adminStore = {
   state: () => ({
     admin: {
@@ -78,18 +88,7 @@ const adminStore = {
     },
   },
   getters: {
-    
     getSortedProjectList(state) {
-      const stringCompare = (f) => {
-        return (argA, argB) => {
-          const a = f(argA);
-          const b = f(argB);
-          if (a < b) return -1;
-          if (a > b) return 1;
-          return 0;
-        };
-      };
-
       const projects = Object.values(state.admin.projectTable);
       projects.sort(stringCompare(x => x.name));
       return projects;
@@ -113,8 +112,35 @@ const adminStore = {
         return count;
       };
     },
+    getProjectLiveSurveyCount(state) {
+      return (countProject) => {
+        const surveys = Object.values(state.admin.surveyTable);
+        let count = 0;
+
+        surveys.forEach((survey) => {
+          if (survey.project.id === countProject.id && survey.status === 'live') {
+            count += 1;
+          }
+        });
+
+        return count;
+      };
+    },
     getSortedSurveysForProject(state) {
-      return [];
+      return (findForProject) => {
+        const surveys = Object.values(state.admin.surveyTable);
+        const projectSurveys = [];
+
+        surveys.forEach((survey) => {
+          if (survey.project.id === findForProject.id) {
+            projectSurveys.push(survey);
+          }
+        });
+
+        // projectSurveys.sort(stringCompare(x => x.title));
+
+        return projectSurveys;
+      };
     },
     // getAdminProjectList: state => state.admin.projectList,
     // getAdminEditProject: state => state.admin.editProject,
