@@ -6,7 +6,7 @@
     <admin-side-menu></admin-side-menu>
 
     <div id="project-details" class="container column">
-      <h1>{{project.name}}</h1>
+      <h1 v-if="project">{{project.name}}</h1>
 
       <Tabs>
         <Tab name='Surveys' :selected='true'>
@@ -110,14 +110,14 @@ export default {
       this.$store.dispatch('setEditProjectByID', to.params.projectID);
     },
   },
-  async created() {
+  created() {
     console.log('ProjectDetails.created');
 
-    await this.$store.dispatch('loadDataForAdmin', this.$auth.currentUser);
-
-    this.$store.dispatch('setEditProjectByID', this.projectID);
+    return this.$store.dispatch('loadDataForAdmin', this.$auth.currentUser);
   },
   mounted() {
+    console.log('ProjectDetails.mounted');
+    this.$store.dispatch('setEditProjectByID', this.projectID);
   },
 };
 </script>

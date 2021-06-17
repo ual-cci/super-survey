@@ -1,7 +1,7 @@
 <template>
 <div class='is-fullheight'>
   <admin-header></admin-header>
-  
+
   <section class="main-content columns is-fullheight">
     <admin-side-menu></admin-side-menu>
 
@@ -24,16 +24,15 @@
       </div>
     </div>
   </section>
-  <confirm-popup ref='confirmDeletePopup' />
   <create-project-popup ref='createProjectPopup' />
 </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import AdminHeader from '@/components/Display/AdminHeader.vue';
 import AdminSideMenu from '@/components/AdminSideMenu.vue';
 import ProjectOverview from '@/components/ProjectsDashboard/ProjectOverview.vue';
-import ConfirmPopup from '@/components/admin/popups/ConfirmPopup.vue';
 import CreateProjectPopup from '@/components/admin/popups/CreateProjectPopup.vue';
 
 export default {
@@ -42,21 +41,11 @@ export default {
     AdminHeader,
     AdminSideMenu,
     ProjectOverview,
-    ConfirmPopup,
     CreateProjectPopup,
   },
-  data() {
-    return {
-      sortedProjectList: [],
-      /* projectList: [],
-      newProjectName: '', */
-    };
+  computed: {
+    ...mapGetters({ sortedProjectList: 'getSortedProjectList' }),
   },
-  /* computed: {
-    sortedProjectList() {
-      return this.$store.getSortedProjectList;
-    },
-  }, */
   methods: {
     addProject() {
       console.log('Projects.addProject:');
@@ -65,30 +54,16 @@ export default {
   },
   beforeMount() {
     console.log('Projects.vue beforeMount()');
-    this.$store.dispatch('clearEditProject');
+    this.$store.dispatch('setEditProjectByID', null);
   },
   async created() {
     await this.$store.dispatch('loadDataForAdmin', this.$auth.currentUser);
-
-    this.sortedProjectList = this.$store.getters.getSortedProjectList;
-    console.log('sortedProjectList=', this.sortedProjectList);
-
-    /* this.$store.dispatch('loadProjects')
-      .then(() => {
-        const { projectList } = this.$store.getters;
-        console.log('Projects.created: projectList=', projectList);
-        this.projectList = projectList;
-      }); */
   },
 };
 </script>
 
 <style lang="scss">
 @import "@/styles/admin.scss";
-
-aside.menu {
-  background-color: #eee;
-}
 
 #projects {
   #add-project {

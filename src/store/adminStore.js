@@ -94,7 +94,28 @@ const adminStore = {
       projects.sort(stringCompare(x => x.name));
       return projects;
     },
-    getEditProject: state => state.admin.projectTable[state.admin.editProjectID],
+    getEditProject(state) {
+      if (!state.admin.editProjectID) return null;
+
+      return state.admin.projectTable[state.admin.editProjectID];
+    },
+    getProjectSurveyCount(state) {
+      return (countProject) => {
+        const surveys = Object.values(state.admin.surveyTable);
+        let count = 0;
+
+        surveys.forEach((survey) => {
+          if (survey.project.id === countProject.id) {
+            count += 1;
+          }
+        });
+
+        return count;
+      };
+    },
+    getSortedSurveysForProject(state) {
+      return [];
+    },
     // getAdminProjectList: state => state.admin.projectList,
     // getAdminEditProject: state => state.admin.editProject,
     // projectList: state => state.admin.projectList,

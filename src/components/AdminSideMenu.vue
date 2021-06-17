@@ -33,7 +33,7 @@ export default {
   computed: {
     ...mapGetters({
       projectList: 'getSortedProjectList',
-      editProject: 'getAdminEditProject',
+      editProject: 'getEditProject',
     }),
   },
   methods: {
@@ -47,8 +47,6 @@ export default {
       console.log('AdminSideMenu.refreshView');
       this.$forceUpdate();
     },
-  },
-  created() {
   },
 };
 </script>

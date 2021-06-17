@@ -5,7 +5,7 @@
               {{project.name}}
     </router-link>
   </h2>
-  <p>X surveys, Y are live.</p>
+  <p>{{surveyCount}} surveys, Y are live.</p>
 </li>
 </template>
 
@@ -20,6 +20,12 @@ export default {
     },
   },
   components: {
+  },
+  computed: {
+    surveyCount() {
+      const counter = this.$store.getters.getProjectSurveyCount;
+      return counter(this.project);
+    },
   },
   methods: {
     projectLinkArgs() {
