@@ -2,6 +2,7 @@ import Vue from 'vue';
 import firebase from '@firebase/app';
 import '@firebase/firestore';
 import _ from 'lodash';
+import slugify from 'slugify';
 
 const stringCompare = (f) => {
   return (argA, argB) => {
@@ -56,6 +57,13 @@ const adminStore = {
     removeAdminProject(state, project) {
       console.log('removeAdminProject: id=', project.id);
       Vue.delete(state.admin.projectTable, project.id);
+    },
+
+    addAdminSurvey(state, newSurvey) {
+      Vue.set(state.admin.surveyTable, newSurvey.id, newSurvey);
+    },
+    removeAdminSurvey(state, survey) {
+      Vue.delete(state.admin.surveyTable, survey.id);
     },
   },
   getters: {
@@ -213,6 +221,37 @@ const adminStore = {
 
         commit('removeAdminProject', project);
       }
+    },
+    async createSurveyInProject({ commit }, payload) {
+      const { user, project, surveyTitle } = payload;
+
+      const surveyDetails = {
+        title: surveyTitle,
+        owner: { email: user.email },
+        project: {
+          name: project.name,
+          id: project.id,
+        },
+
+        slug: slugify(surveyTitle, { lower: true }),
+        created: new Date(),
+        forceDemographics: false,
+        showLogo: true,
+        showTitle: true,
+        showSignup: true,
+        demographicsFirst: false,
+        status: 'draft',
+        target: 'survey',
+      };
+
+      const doc = await firebase
+        .firestore()
+        .collection('surveys')
+        .add(surveyDetails);
+
+      surveyDetails.id = doc.id;
+
+      commit('addAdminSurvey', surveyDetails);
     },
   },
 };

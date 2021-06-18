@@ -19,6 +19,13 @@
                 :v-model="surveyList"
                 :survey="survey" />
             </ul>
+            <div class='add-survey'>
+              <a class="button" @click="doCreateSurvey">
+                <i class="fas fa-plus-circle"></i>&nbsp;
+                Create New Survey
+              </a>
+            </div>
+
           </div>
           <div v-else>
             <h2>Project is loading...</h2>
@@ -36,6 +43,7 @@
   </section>
 
   <confirm-popup ref='confirmDeletePopup' />
+  <create-survey-popup ref='createSurveyPopup' />
 </div>
 </template>
 
@@ -46,6 +54,7 @@ import AdminHeader from '@/components/Display/AdminHeader.vue';
 import AdminSideMenu from '@/components/AdminSideMenu.vue';
 import SurveySummary from '@/components/ProjectsDashboard/SurveySummary.vue';
 import ConfirmPopup from '@/components/admin/popups/ConfirmPopup.vue';
+import CreateSurveyPopup from '@/components/admin/popups/CreateSurveyPopup.vue';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -57,6 +66,7 @@ export default {
     AdminSideMenu,
     SurveySummary,
     ConfirmPopup,
+    CreateSurveyPopup,
   },
   props: {
     projectID: String,
@@ -91,6 +101,9 @@ export default {
         await this.$store.dispatch('deleteProject', this.project);
         this.$router.push({ name: 'projects' });
       }
+    },
+    async doCreateSurvey() {
+      await this.$refs.createSurveyPopup.show(this.project);
     },
   },
   watch: {
