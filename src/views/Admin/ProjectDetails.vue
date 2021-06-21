@@ -106,13 +106,13 @@ export default {
       await this.$refs.createSurveyPopup.show(this.project);
     },
   },
-  watch: {
+  /* watch: {
     $route(to) {
       console.log('ProjectDetails.route!');
       console.log('  to.params=', to.params);
       this.$store.dispatch('setEditProjectByID', to.params.projectID);
     },
-  },
+  }, */
   async created() {
     console.log('ProjectDetails.created');
 

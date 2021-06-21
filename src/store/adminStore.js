@@ -40,6 +40,11 @@ const adminStore = {
       console.log('store.commit.setEditProject: project=', projectID);
       Vue.set(state.admin, 'editProjectID', projectID);
     },
+    setEditSurveyID(state, surveyID) {
+      console.log('store.commit.setEditSurvey: survey=', surveyID);
+      Vue.set(state.admin, 'editSurveyID', surveyID);
+    },
+
 
     clearEditProject(state) {
       Vue.set(state.admin, 'editProject', null);
@@ -67,6 +72,7 @@ const adminStore = {
     },
   },
   getters: {
+    // project getters
     getSortedProjectList(state) {
       const projects = Object.values(state.admin.projectTable);
       projects.sort(stringCompare(x => x.name));
@@ -76,6 +82,22 @@ const adminStore = {
       if (!state.admin.editProjectID) return null;
 
       return state.admin.projectTable[state.admin.editProjectID];
+    },
+    getEditProjectMaybeBySurvey(state) {
+      if (state.admin.tablesAreLoaded) {
+        const { editSurveyID } = state.admin;
+        if (editSurveyID) {
+          const survey = state.admin.surveyTable[editSurveyID];
+          const projectID = survey.project.id;
+          return state.admin.projectTable[projectID];
+        }
+
+        const { editProjectID } = state.admin;
+        if (editProjectID) {
+          return state.admin.projectTable[editProjectID];
+        }
+      }
+      return null;
     },
     getProjectSurveyCount(state) {
       return (countProject) => {
@@ -121,6 +143,18 @@ const adminStore = {
         return projectSurveys;
       };
     },
+
+    // survey getters
+    getEditSurvey(state) {
+      if (!state.admin.editSurveyID) return null;
+
+      return state.admin.surveyTable[state.admin.editSurveyID];
+    },
+
+    // getEditProjectThroughSurvey(state) {
+    //   let 
+    // },
+
   },
   actions: {
     async loadDataForAdmin({ state, commit }, user) {
@@ -252,6 +286,10 @@ const adminStore = {
       surveyDetails.id = doc.id;
 
       commit('addAdminSurvey', surveyDetails);
+    },
+
+    setEditSurveyByID({ commit }, surveyID) {
+      commit('setEditSurveyID', surveyID);
     },
   },
 };

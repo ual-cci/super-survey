@@ -122,11 +122,19 @@ export default new Router({
     },
     {
       path: '/survey/edit/:surveyID',
+      name: 'survey-details',
+      component: () => import('./views/Admin/SurveyDetails.vue'),
+      beforeEnter: wrapLogger(guards.onlyAdmin),
+      props: true,
+    },
+    {
+      path: '/survey/design/:surveyID',
       name: 'survey-designer',
       component: () => import('./views/Admin/SurveyDesigner.vue'),
       beforeEnter: wrapLogger(guards.onlyAdmin),
       props: true,
     },
+
     {
       path: '/email-signups',
       name: 'email-signups',

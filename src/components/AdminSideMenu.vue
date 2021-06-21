@@ -33,7 +33,7 @@ export default {
   computed: {
     ...mapGetters({
       projectList: 'getSortedProjectList',
-      editProject: 'getEditProject',
+      editProject: 'getEditProjectMaybeBySurvey',
     }),
   },
   methods: {

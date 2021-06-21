@@ -17,7 +17,7 @@ export default {
   methods: {
     surveyLinkArgs() {
       return {
-        name: 'survey-designer',
+        name: 'survey-details',
         params: { surveyID: this.survey.id },
       };
     },
