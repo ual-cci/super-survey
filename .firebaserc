@@ -1,12 +1,12 @@
 {
   "projects": {
-    "default": "test-thing-307817"
+    "default": "super-survey-307711"
   },
   "targets": {
-    "test-thing-307817": {
+    "super-survey-307711": {
       "hosting": {
         "dev": [
-          "test-thing-dev"
+          "super-survey-dev"
         ],
         "prod": [
         ]
