@@ -105,7 +105,7 @@
   </div>
   <transition name="fade">
     <div v-if="validAnswer && timesAnswered > 0" class="smiley">
-      <i class="far fa-thumbs-up"></i>
+      <i class="far fa-check-circle"></i>
     </div>
   </transition>
 </div>
