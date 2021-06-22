@@ -291,6 +291,12 @@ const adminStore = {
     setEditSurveyByID({ commit }, surveyID) {
       commit('setEditSurveyID', surveyID);
     },
+
+    /* original designer compatibility actions */
+    async getProject({ state }, project) {
+      const { id } = project;
+      return state.admin.projectTable[id];
+    },
   },
 };
 

@@ -624,10 +624,13 @@ export default {
 
       this.reflowElements({ save: false });
 
-      this.$store.dispatch('findEditProject', this.survey.project.id)
+      /* this.$store.dispatch('findEditProject', this.survey.project.id)
         .then((project) => {
           this.isPublishable = project.preambleStatus === 'complete';
-        });
+        }); */
+
+      const project = this.$store.getters.getEditProjectMaybeBySurvey;
+      this.isPublishable = project.preambleStatus === 'complete';
 
       this.loading = false;
     },
@@ -651,7 +654,10 @@ export default {
         });
     },
   },
-  created() {
+  async created() {
+    await this.$store.dispatch('loadDataForAdmin', this.$auth.currentUser);
+    await this.$store.dispatch('setEditSurveyByID', this.surveyID);
+
     const { surveyID } = this;
     const survey = this.surveyFromID(surveyID);
     if (!survey) {

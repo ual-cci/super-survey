@@ -41,12 +41,6 @@ export default new Vuex.Store({
     demographics: {},
   }),
   mutations: {
-    setEditSurveys(state, surveys) {
-      Vue.set(state, 'editSurveys', surveys);
-    },
-    addProject(state, project) {
-      Vue.set(state.projects, project.id, project);
-    },
     deleteProject(state, project) {
       Vue.delete(state.projects, project.id);
     },

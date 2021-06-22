@@ -134,7 +134,6 @@ export default new Router({
       beforeEnter: wrapLogger(guards.onlyAdmin),
       props: true,
     },
-
     {
       path: '/email-signups',
       name: 'email-signups',
