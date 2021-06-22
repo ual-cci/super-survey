@@ -1,9 +1,12 @@
 <template>
 <div class="columns">
   <div class="column left-column">
-    <router-link :to="{ name: 'projects' }">
-      <img src="/img/logo.png" alt="">
-    </router-link>
+    <div class='logo'>
+      <router-link :to="{ name: 'projects' }">
+        <img src="/img/logo.png" alt="Super Survey">
+        <span>&larr; Back to Projects</span>
+      </router-link>
+    </div>
 
     <span class="heading">Elements</span>
     <draggable v-if="isEditable" class="columns is-gapless is-multiline is-mobile"
@@ -690,6 +693,10 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/styles/admin.scss";
+
+.logo {
+  padding-bottom: 1em;
+}
 
 .left-align {
   text-align: left;
