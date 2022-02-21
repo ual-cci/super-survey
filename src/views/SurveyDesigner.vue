@@ -515,7 +515,10 @@ export default {
             output.questionPageMap[e.number] = currentPageNumber;
             // flat array for choices
             e.answerChoices = e.answerChoices.map(a => a.value);
-            e.hasOther = e.answerChoices.some(c => c.match(/^other$/i));
+            e.hasOther = e.answerChoices.some((c) => {
+              if (typeof c === 'string') return c.match(/^other$/i);
+              return false;
+            });
             e.index = questionCounter++;
 
             const sentences = e.text.match(/[^.!?:]+[.!?:]/g);

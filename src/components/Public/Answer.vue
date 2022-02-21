@@ -174,10 +174,12 @@ export default {
     displayOther() {
       if (this.text) {
         const re = /^other$/i;
-        if (Array.isArray(this.text)) {
-          return this.text.some(t => t.match(re));
+        if (typeof this.text === 'string') {
+          if (Array.isArray(this.text)) {
+            return this.text.some(t => t.match(re));
+          }
+          return this.text.match(re);
         }
-        return this.text.match(re);
       }
       return false;
     },
