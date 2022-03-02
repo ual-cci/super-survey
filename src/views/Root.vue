@@ -28,7 +28,7 @@ export default {
     return {
       loaded: false,
       surveys: [],
-      surveyCount: 0
+      surveyCount: 0,
     };
   },
 
@@ -37,18 +37,16 @@ export default {
       .orderBy('title')
       .get()
       .then((snapshot) => {
-        let surveyData = snapshot.docs.map( doc => {
-          return {
-            id: doc.id,
-            title: doc.data().title
-          };
-        });
-        
+        const surveyData = snapshot.docs.map(doc => ({
+          id: doc.id,
+          title: doc.data().title,
+        }));
+
         this.loaded = true;
-        this.surveys = surveyData,
+        this.surveys = surveyData;
         this.surveyCount = surveyData.length;
-    });
-  }
+      });
+  },
 };
 </script>
 
@@ -66,7 +64,7 @@ main#root {
   }
 
   h1 {
-    font-size: 2em;  
+    font-size: 2em;
   }
   h2 {
     font-size: 1.5em;

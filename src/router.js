@@ -137,8 +137,8 @@ export default new Router({
     {
       path: '/:pathMatch(.*)*',
       name: 'route-not-found',
-      component: () => import('./views/RouteNotFound.vue')
-    }
+      component: () => import('./views/RouteNotFound.vue'),
+    },
 
 
   ],

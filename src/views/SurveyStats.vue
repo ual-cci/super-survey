@@ -35,8 +35,8 @@
       <router-link :to="{ name: 'answer-editor', params: { surveyID } }">
         Transcribe answers
       </router-link>
-      <hr/>
     </p>
+    <hr>
     <exporter :surveyID="surveyID" :title="survey.title"></exporter>
   </div>
 </admin-narrow>
