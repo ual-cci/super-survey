@@ -97,7 +97,7 @@ export default {
     filteredAnswers() {
       return this.answers.filter((answer) => {
         let output = true;
-        for (const f of this.filters) {
+        this.filters.forEach((f) => {
           if (f === 'transcribed') {
             output = output && answer.transcribed;
           } else if (f === 'untranscribed') {
@@ -109,7 +109,7 @@ export default {
           } else if (f === 'uncompleted') {
             output = output && answer.transcription && !answer.transcription.complete;
           }
-        }
+        });
 
         if (this.filterQuestionNumber) {
           output = output && answer.question.number === this.filterQuestionNumber;
