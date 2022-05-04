@@ -247,7 +247,7 @@ export default {
     focusLastChoice() {
       Vue.nextTick().then(() => {
         const last = this.$refs.answerChoice.slice(-1)[0];
-        last.focus();
+        if (last) last.focus();
       });
     },
     choiceKeyDown(index, e) {

@@ -36,7 +36,8 @@
           </button>
           <p>Pressing <i class="fas fa-search-minus"></i> will decrease the size of the text.</p>
           <p>Pressing <i class="fas fa-search-plus"></i> will incrase the size of the text.</p>
-          <p>Pressing <i class="fas fa-palette"></i> lets you change backgound colour of the page.</p>
+          <p>Pressing <i class="fas fa-palette"></i>
+            lets you change backgound colour of the page.</p>
         </div>
       </div>
     </div>
