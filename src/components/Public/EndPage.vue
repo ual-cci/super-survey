@@ -1,12 +1,7 @@
 <template lang="html">
-<div class="end-page">
-  <h2>Thanks so much for taking part!</h2>
-  <p>
-    By taking part, you are helping our research, which explores the value of
-    difference and questions what is ‘normal’.
-  </p>
-  <p>(more content here)</p>
-</div>
+  <div class="end-page">
+    <h2>Thanks so much for taking part!</h2>
+  </div>
 </template>
 
 <script>
@@ -33,9 +28,15 @@ export default {
       if (this.buttonsDisabled) {
         return;
       }
-      this.$db.collection('misc').doc('signups').set({
-        [thing]: this.arrayUnion(this.email),
-      }, { merge: true });
+      this.$db
+        .collection('misc')
+        .doc('signups')
+        .set(
+          {
+            [thing]: this.arrayUnion(this.email),
+          },
+          { merge: true },
+        );
 
       Vue.set(this.signedUp, thing, true);
     },
